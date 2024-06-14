@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "DeJALJa8o5h9aGn47Y7MrqXr0a9zf2abCfKdF0mhmdA=",
+  "Source": "CounterService",
+  "BasePath": "_content/CounterService",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

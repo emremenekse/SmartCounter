@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "DX6l7Hdl/Lj+H+8RKMgGucZ4BBE6xwWUpLHsoVkCq0FKVI+55hpAgbxpastNvJWFZ1PlV1p6zNAWdnq3ytUhfQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\ReportService\\ReportService\\ReportService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mehme\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.13\\microsoft.aspnetcore.openapi.7.0.13.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
