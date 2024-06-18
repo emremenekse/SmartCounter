@@ -10,7 +10,7 @@ using CounterService.Validation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddGrpc();
 builder.Services.AddControllers()
     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<MeterReadingDTOValidator>());
 builder.Services.AddDbContext<MeterContext>(options =>
@@ -47,6 +47,7 @@ app.UseAuthorization();
 app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapGrpcService<CounterService.Service.CounterGrpcService>(); 
     endpoints.MapControllers();
 });
 

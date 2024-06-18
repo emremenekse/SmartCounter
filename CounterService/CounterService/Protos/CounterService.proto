@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "CounterService.Grpc";
+
+service Counter {
+  rpc GetCounterData (CounterRequest) returns (CounterResponse);
+}
+
+message CounterRequest {
+  string serialNumber = 1;
+}
+
+message CounterResponse {
+  string serialNumber = 1;
+  double lastIndex = 2;
+  double voltage = 3;
+  double current = 4;
+  string measurementTime = 5;
+}

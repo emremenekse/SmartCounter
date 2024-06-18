@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ReportService",
+    "\\ReportService\\ReportService",
+    "\\ReportService\\ReportService\\DTOs"
   ],
+  "SelectedNode": "\\ReportService\\ReportService\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
