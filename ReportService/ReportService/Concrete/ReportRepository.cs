@@ -42,6 +42,10 @@ namespace ReportService.Concrete
         {
             return await _context.ReportRequests.FindAsync(requestId);
         }
+        public async Task<ReportRequest> GetRequestBySerialNumberAsync(string serialNumber)
+        {
+            return await _context.ReportRequests.FirstOrDefaultAsync(r => r.SerialNumber == serialNumber && r.Status == "Completed");
+        }
 
         public async Task<ReportResult> GetResultByRequestIdAsync(Guid requestId)
         {

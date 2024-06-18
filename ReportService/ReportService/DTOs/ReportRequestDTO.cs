@@ -5,5 +5,6 @@
         public Guid Id { get; set; }
         public string SerialNumber { get; set; }
         public string Status { get; set; }
+        public string FilePath { get; set; }
     }
 }

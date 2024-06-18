@@ -11,8 +11,6 @@ namespace ReportService.Validation
                 .NotEmpty().WithMessage("Serial number is required.")
                 .Length(8).WithMessage("Serial number must be 8 characters long.");
 
-            RuleFor(x => x.RequestTime)
-                .NotEmpty().WithMessage("Request time is required.");
 
             RuleFor(x => x.Status)
                 .NotEmpty().WithMessage("Status is required.")

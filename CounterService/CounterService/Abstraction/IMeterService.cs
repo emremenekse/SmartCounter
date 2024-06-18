@@ -5,8 +5,8 @@ namespace CounterService.Abstraction
 {
     public interface IMeterService
     {
-        Task<IEnumerable<MeterReadingDTO>> GetAllAsync();
-        Task<MeterReadingDTO> GetBySerialNumberAsync(string serialNumber);
-        Task AddAsync(MeterReadingDTO meterReading);
+        Task<Shared.Response<IEnumerable<MeterReadingDTO>>> GetAllAsync();
+        Task<Shared.Response<MeterReadingDTO>> GetBySerialNumberAsync(string serialNumber);
+        Task<Shared.Response<MeterReadingDTO>> AddAsync(MeterReadingDTO meterReading);
     }
 }

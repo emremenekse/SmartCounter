@@ -799,6 +799,16 @@
         "build": {
           "buildTransitive/net6.0/_._": {}
         }
+      },
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
       }
     }
   },
@@ -2207,6 +2217,11 @@
         "system.threading.channels.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../../Shared/Shared/Shared.csproj",
+      "msbuildProject": "../../Shared/Shared/Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -2223,6 +2238,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 7.0.20",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.20",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 7.0.18",
+      "Shared >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.5.0"
     ]
   },
@@ -2252,7 +2268,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

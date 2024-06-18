@@ -2,6 +2,7 @@
 using CounterService.Abstraction;
 using CounterService.DTOs;
 using CounterService.Entity;
+using System.Collections.Generic;
 
 namespace CounterService.Service
 {
@@ -16,24 +17,26 @@ namespace CounterService.Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<MeterReadingDTO>> GetAllAsync()
+        public async Task<Shared.Response<IEnumerable<MeterReadingDTO>>> GetAllAsync()
         {
             var meterReadings = await _unitOfWork.MeterRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<MeterReadingDTO>>(meterReadings);
+            return Shared.Response<IEnumerable<MeterReadingDTO>>.Success(_mapper.Map<IEnumerable<MeterReadingDTO>>(meterReadings),200);
         }
 
-        public async Task<MeterReadingDTO> GetBySerialNumberAsync(string serialNumber)
+        public async Task<Shared.Response<MeterReadingDTO>> GetBySerialNumberAsync(string serialNumber)
         {
             var meterReading = await _unitOfWork.MeterRepository.GetBySerialNumberAsync(serialNumber);
-            return _mapper.Map<MeterReadingDTO>(meterReading);
+            return Shared.Response < MeterReadingDTO>.Success( _mapper.Map<MeterReadingDTO>(meterReading),200);
         }
 
-        public async Task AddAsync(MeterReadingDTO meterReadingDto)
+        public async Task<Shared.Response<MeterReadingDTO>> AddAsync(MeterReadingDTO meterReadingDto)
         {
             meterReadingDto.Id = Guid.NewGuid();
             var meterReading = _mapper.Map<MeterReading>(meterReadingDto);
             await _unitOfWork.MeterRepository.AddAsync(meterReading);
             await _unitOfWork.CommitAsync();
+
+            return Shared.Response<MeterReadingDTO>.Success(_mapper.Map<MeterReadingDTO>(meterReading), 201);
         }
     }
 }

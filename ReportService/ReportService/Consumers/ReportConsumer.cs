@@ -2,6 +2,7 @@
 using ReportService.Abstractions;
 using ReportService.Entities;
 using ReportService.Messaging;
+using System.Text.Json;
 
 namespace ReportService.Consumers
 {
@@ -20,29 +21,65 @@ namespace ReportService.Consumers
 
             using (var scope = _serviceProvider.CreateScope())
             {
-                var reportRepository = scope.ServiceProvider.GetRequiredService<IReportRepository>();
-
-                await reportRepository.UpdateRequestStatusAsync(reportMessage.ReportRequestId, "Processing");
-
-                var reportData = $"Report for Serial Number: {reportMessage.SerialNumber}\n" +
-                                 $"Last Index: {reportMessage.LastIndex}\n" +
-                                 $"Voltage: {reportMessage.Voltage}\n" +
-                                 $"Current: {reportMessage.Current}\n" +
-                                 $"Measurement Time: {reportMessage.MeasurementTime}";
-
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Reports", $"{reportMessage.ReportRequestId}.txt");
-                await File.WriteAllTextAsync(filePath, reportData);
-
-                var reportResult = new ReportResult
+                var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                var reportRepository = scope.ServiceProvider.GetRequiredService<IUnitOfWork>().ReportRepository;
+                try
                 {
-                    Id = Guid.NewGuid(),
-                    ReportRequestId = reportMessage.ReportRequestId,
-                    FilePath = filePath,
-                    GeneratedTime = DateTime.UtcNow
-                };
-                await reportRepository.AddResultAsync(reportResult);
+                    await reportRepository.UpdateRequestStatusAsync(reportMessage.ReportRequestId, "Processing");
 
-                await reportRepository.UpdateRequestStatusAsync(reportMessage.ReportRequestId, "Completed");
+                    var reportData = $"Report for Serial Number: {reportMessage.SerialNumber}\n" +
+                                     $"Last Index: {reportMessage.LastIndex}\n" +
+                                     $"Voltage: {reportMessage.Voltage}\n" +
+                                     $"Current: {reportMessage.Current}\n" +
+                                     $"Measurement Time: {reportMessage.MeasurementTime}";
+
+                    var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Reports");
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    var filePath = Path.Combine(directoryPath, $"{reportMessage.ReportRequestId}.txt");
+                    var content = GetReportContent(reportMessage, "txt"); 
+
+                    await File.WriteAllTextAsync(filePath, content);
+                    await File.WriteAllTextAsync(filePath, reportData);
+
+                    var reportResult = new ReportResult
+                    {
+                        Id = Guid.NewGuid(),
+                        ReportRequestId = reportMessage.ReportRequestId,
+                        FilePath = filePath,
+                        GeneratedTime = DateTime.UtcNow
+                    };
+                    await reportRepository.AddResultAsync(reportResult);
+
+                    await reportRepository.UpdateRequestStatusAsync(reportMessage.ReportRequestId, "Completed");
+                    await unitOfWork.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+                
+
+
+            }
+        }
+        private string GetReportContent(ReportMessage reportMessage, string format)
+        {
+            if (format.ToLower() == "json")
+            {
+                return JsonSerializer.Serialize(reportMessage);
+            }
+            else 
+            {
+                return $"Report for Serial Number: {reportMessage.SerialNumber}\n" +
+                       $"Last Index: {reportMessage.LastIndex}\n" +
+                       $"Voltage: {reportMessage.Voltage}\n" +
+                       $"Current: {reportMessage.Current}\n" +
+                       $"Measurement Time: {reportMessage.MeasurementTime}";
             }
         }
     }

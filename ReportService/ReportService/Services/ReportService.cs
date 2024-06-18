@@ -6,6 +6,7 @@ using ReportService.DTOs;
 using ReportService.Entities;
 using ReportService.Messaging;
 using CounterService.Grpc;
+using System.Collections.Generic;
 
 namespace ReportService.Services
 {
@@ -21,9 +22,13 @@ namespace ReportService.Services
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
         }
-
-        public async Task<ReportRequestDTO> CreateReportRequestAsync(string serialNumber)
+        public async Task<Shared.Response<ReportRequestDTO>> CreateReportRequestAsync(string serialNumber)
         {
+            var existCheck = await _unitOfWork.ReportRepository.GetRequestBySerialNumberAsync(serialNumber);
+            if(existCheck != null )
+            {
+                return Shared.Response<ReportRequestDTO>.Fail("Report request already exists", 400);
+            }
             var request = new ReportRequest
             {
                 Id = Guid.NewGuid(),
@@ -52,16 +57,16 @@ namespace ReportService.Services
 
             await _publishEndpoint.Publish(reportMessage);
 
-            return _mapper.Map<ReportRequestDTO>(request);
+            return Shared.Response<ReportRequestDTO>.Success(_mapper.Map<ReportRequestDTO>(request),201);
         }
 
-        public async Task<IEnumerable<ReportRequestDTO>> GetAllReportRequestsAsync()
+        public async Task<Shared.Response<IEnumerable<ReportRequestDTO>>> GetAllReportRequestsAsync()
         {
             var requests = await _unitOfWork.ReportRepository.GetAllRequestsAsync();
-            return _mapper.Map<IEnumerable<ReportRequestDTO>>(requests);
+            return Shared.Response<IEnumerable<ReportRequestDTO>>.Success(_mapper.Map<IEnumerable<ReportRequestDTO>>(requests),200);
         }
 
-        public async Task<ReportRequestDTO> GetReportRequestByIdAsync(Guid requestId)
+        public async Task<Shared.Response<ReportRequestDTO>> GetReportRequestByIdAsync(Guid requestId)
         {
             var request = await _unitOfWork.ReportRepository.GetRequestByIdAsync(requestId);
             var requestDto = _mapper.Map<ReportRequestDTO>(request);
@@ -75,7 +80,7 @@ namespace ReportService.Services
                 }
             }
 
-            return requestDto;
+            return Shared.Response<ReportRequestDTO>.Success(requestDto,200);
         }
     }
 }

@@ -53,3 +53,5 @@ C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Grpc.Core.Api.dll
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Grpc.Net.Client.dll
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Grpc.Net.Common.dll
+C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Shared.dll
+C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Shared.pdb

@@ -4,8 +4,8 @@ namespace ReportService.Abstractions
 {
     public interface IReportService
     {
-        Task<ReportRequestDTO> CreateReportRequestAsync(string serialNumber);
-        Task<IEnumerable<ReportRequestDTO>> GetAllReportRequestsAsync();
-        Task<ReportRequestDTO> GetReportRequestByIdAsync(Guid requestId);
+        Task<Shared.Response<ReportRequestDTO>> CreateReportRequestAsync(string serialNumber);
+        Task<Shared.Response<IEnumerable<ReportRequestDTO>>> GetAllReportRequestsAsync();
+        Task<Shared.Response<ReportRequestDTO>> GetReportRequestByIdAsync(Guid requestId);
     }
 }

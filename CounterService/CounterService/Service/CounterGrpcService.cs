@@ -21,10 +21,10 @@ namespace CounterService.Service
             var response = new CounterResponse
             {
                 SerialNumber = request.SerialNumber,
-                LastIndex = (double)meterReading.LastIndex, 
-                Voltage = (double)meterReading.Voltage, 
-                Current = (double)meterReading.Current, 
-                MeasurementTime = meterReading.MeasurementTime.ToString()
+                LastIndex = (double)meterReading.Data.LastIndex, 
+                Voltage = (double)meterReading.Data.Voltage, 
+                Current = (double)meterReading.Data.Current, 
+                MeasurementTime = meterReading.Data.MeasurementTime.ToString()
             };
 
             return response;

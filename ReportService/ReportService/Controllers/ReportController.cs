@@ -6,7 +6,7 @@ namespace ReportService.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ReportController : ControllerBase
+    public class ReportController : CustomBaseController
     {
         private readonly IReportService _reportService;
 
@@ -16,28 +16,28 @@ namespace ReportService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ReportRequestDTO>> CreateReportRequest([FromBody] string serialNumber)
+        public async Task<IActionResult> CreateReportRequest([FromBody] string serialNumber)
         {
             var reportRequest = await _reportService.CreateReportRequestAsync(serialNumber);
-            return CreatedAtAction(nameof(GetReportRequestById), new { id = reportRequest.Id }, reportRequest);
+            return CreateActionResultInstance(reportRequest);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReportRequestDTO>>> GetAllReportRequests()
+        public async Task<IActionResult> GetAllReportRequests()
         {
             var reportRequests = await _reportService.GetAllReportRequestsAsync();
-            return Ok(reportRequests);
+            return CreateActionResultInstance(reportRequests);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReportRequestDTO>> GetReportRequestById(Guid id)
+        public async Task<IActionResult> GetReportRequestById(Guid id)
         {
             var reportRequest = await _reportService.GetReportRequestByIdAsync(id);
             if (reportRequest == null)
             {
                 return NotFound();
             }
-            return Ok(reportRequest);
+            return CreateActionResultInstance(reportRequest);
         }
     }
 }

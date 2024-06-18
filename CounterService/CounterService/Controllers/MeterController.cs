@@ -8,7 +8,7 @@ namespace CounterService.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class MeterController : ControllerBase
+    public class MeterController : CustomBaseController
     {
         private readonly IMeterService _meterService;
 
@@ -18,33 +18,33 @@ namespace CounterService.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MeterReadingDTO>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var meterReadings = await _meterService.GetAllAsync();
-            return Ok(meterReadings);
+            return CreateActionResultInstance(meterReadings);
         }
 
         [HttpGet("{serialNumber}")]
-        public async Task<ActionResult<MeterReadingDTO>> GetBySerialNumber(string serialNumber)
+        public async Task<IActionResult> GetBySerialNumber(string serialNumber)
         {
             var meterReading = await _meterService.GetBySerialNumberAsync(serialNumber);
             if (meterReading == null)
             {
                 return NotFound();
             }
-            return Ok(meterReading);
+            return CreateActionResultInstance(meterReading);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add([FromBody] MeterReadingDTO meterReadingDto)
+        public async Task<IActionResult> Add([FromBody] MeterReadingDTO meterReadingDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            await _meterService.AddAsync(meterReadingDto);
-            return CreatedAtAction(nameof(GetBySerialNumber), new { serialNumber = meterReadingDto.SerialNumber }, meterReadingDto);
+            var result = await _meterService.AddAsync(meterReadingDto);
+            return CreateActionResultInstance(result);
         }
     }
 }

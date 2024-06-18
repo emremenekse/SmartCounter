@@ -52,3 +52,5 @@ C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService\CounterService\ob
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService\CounterService\obj\Debug\net7.0\CounterService.pdb
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService\CounterService\obj\Debug\net7.0\CounterService.genruntimeconfig.cache
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService\CounterService\obj\Debug\net7.0\ref\CounterService.dll
+C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService\CounterService\bin\Debug\net7.0\Shared.dll
+C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService\CounterService\bin\Debug\net7.0\Shared.pdb

@@ -9,6 +9,7 @@ namespace ReportService.Abstractions
         Task AddResultAsync(ReportResult result);
         Task<IEnumerable<ReportRequest>> GetAllRequestsAsync();
         Task<ReportRequest> GetRequestByIdAsync(Guid requestId);
+        Task<ReportRequest> GetRequestBySerialNumberAsync(string serialNumber);
         Task<ReportResult> GetResultByRequestIdAsync(Guid requestId);
     }
 }
