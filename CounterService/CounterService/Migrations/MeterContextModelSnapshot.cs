@@ -34,8 +34,9 @@ namespace CounterService.Migrations
                     b.Property<decimal>("LastIndex")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime>("MeasurementTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("MeasurementTime")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("SerialNumber")
                         .IsRequired()

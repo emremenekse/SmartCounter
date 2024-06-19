@@ -5,7 +5,7 @@ namespace CounterService.Abstraction
     public interface IMeterRepository
     {
         Task<IEnumerable<MeterReading>> GetAllAsync();
-        Task<MeterReading> GetBySerialNumberAsync(string serialNumber);
+        Task<MeterReading> GetBySerialNumberAndMeasurementTimeAsync(string serialNumber,DateTime dateTime);
         Task AddAsync(MeterReading meterReading);
     }
 }

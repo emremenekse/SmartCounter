@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using CounterService.Service;
 using Microsoft.EntityFrameworkCore;
 using CounterService.Validation;
+using Shared.ErrorHandling;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors();
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthorization();
 app.UseRouting();
 app.UseEndpoints(endpoints =>

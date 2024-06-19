@@ -55,3 +55,4 @@ C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Grpc.Net.Common.dll
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Shared.dll
 C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Shared.pdb
+C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\ReportService\ReportService\bin\Debug\net7.0\Newtonsoft.Json.dll

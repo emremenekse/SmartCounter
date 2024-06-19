@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..\SmartCounterDocker\SmartCounter</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +34,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <Protobuf Include="Protos\CounterService.proto" GrpcServices="Server" />
   </ItemGroup>

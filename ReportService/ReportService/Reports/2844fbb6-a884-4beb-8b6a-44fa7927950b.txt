@@ -1,0 +1,5 @@
+Report for Serial Number: 11223344
+Last Index: 11
+Voltage: 11
+Current: 11
+Measurement Time: 6/6/2024 11:27:00 PM

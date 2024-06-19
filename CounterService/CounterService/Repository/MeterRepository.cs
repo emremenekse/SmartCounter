@@ -19,13 +19,14 @@ namespace CounterService.Repository
             return await _context.MeterReadings.ToListAsync();
         }
 
-        public async Task<MeterReading> GetBySerialNumberAsync(string serialNumber)
+        public async Task<MeterReading> GetBySerialNumberAndMeasurementTimeAsync(string serialNumber, DateTime measurementTime)
         {
+
             return await _context.MeterReadings
-                .Where(m => m.SerialNumber == serialNumber)
-                .OrderByDescending(m => m.MeasurementTime)
+                .Where(m => m.SerialNumber == serialNumber && m.MeasurementTime == measurementTime.ToString())
                 .FirstOrDefaultAsync();
         }
+
 
         public async Task AddAsync(MeterReading meterReading)
         {

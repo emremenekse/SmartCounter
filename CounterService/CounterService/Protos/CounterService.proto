@@ -8,6 +8,7 @@ service Counter {
 
 message CounterRequest {
   string serialNumber = 1;
+  string measurementTime = 2;
 }
 
 message CounterResponse {

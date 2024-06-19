@@ -1,0 +1,5 @@
+Report for Serial Number: 29032903
+Last Index: 11
+Voltage: 11
+Current: 11
+Measurement Time: 6/5/2024 11:36:00 PM

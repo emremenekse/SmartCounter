@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportService", "..\ReportS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CounterService", "CounterService\CounterService.csproj", "{4C7230BF-A89D-425B-8298-2361E6254929}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "..\Shared\Shared\Shared.csproj", "{7E2D787B-A00F-4D1B-9DF0-0D3BF42E19A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "..\Shared\Shared\Shared.csproj", "{7E2D787B-A00F-4D1B-9DF0-0D3BF42E19A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

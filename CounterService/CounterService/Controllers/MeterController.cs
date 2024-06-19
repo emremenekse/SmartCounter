@@ -24,16 +24,17 @@ namespace CounterService.Controllers
             return CreateActionResultInstance(meterReadings);
         }
 
-        [HttpGet("{serialNumber}")]
-        public async Task<IActionResult> GetBySerialNumber(string serialNumber)
+        [HttpGet("{serialNumber}/{measurementTime}")]
+        public async Task<IActionResult> GetBySerialNumberAndMeasurementTime(string serialNumber, DateTime measurementTime)
         {
-            var meterReading = await _meterService.GetBySerialNumberAsync(serialNumber);
+            var meterReading = await _meterService.GetBySerialNumberAndMeasurementTimeAsync(serialNumber, measurementTime);
             if (meterReading == null)
             {
                 return NotFound();
             }
             return CreateActionResultInstance(meterReading);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] MeterReadingDTO meterReadingDto)

@@ -16,15 +16,18 @@ namespace CounterService.Service
 
         public override async  Task<CounterResponse> GetCounterData(CounterRequest request, ServerCallContext context)
         {
-            var meterReading = await _meterService.GetBySerialNumberAsync(request.SerialNumber);
-
+            var meterReading = await _meterService.GetBySerialNumberAndMeasurementTimeAsync(request.SerialNumber, DateTime.Parse(request.MeasurementTime));
+            if (meterReading.Data == null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, "Meter reading not found."));
+            }
             var response = new CounterResponse
             {
                 SerialNumber = request.SerialNumber,
                 LastIndex = (double)meterReading.Data.LastIndex, 
                 Voltage = (double)meterReading.Data.Voltage, 
                 Current = (double)meterReading.Data.Current, 
-                MeasurementTime = meterReading.Data.MeasurementTime.ToString()
+                MeasurementTime = request.MeasurementTime
             };
 
             return response;

@@ -1,0 +1,5 @@
+Report for Serial Number: 99999999
+Last Index: 11
+Voltage: 11
+Current: 11
+Measurement Time: 6/21/2024 11:04:00 PM

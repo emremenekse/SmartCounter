@@ -24,17 +24,17 @@ namespace CounterService.Grpc {
     static CounterServiceReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChtQcm90b3MvQ291bnRlclNlcnZpY2UucHJvdG8iJgoOQ291bnRlclJlcXVl",
-            "c3QSFAoMc2VyaWFsTnVtYmVyGAEgASgJInUKD0NvdW50ZXJSZXNwb25zZRIU",
-            "CgxzZXJpYWxOdW1iZXIYASABKAkSEQoJbGFzdEluZGV4GAIgASgBEg8KB3Zv",
-            "bHRhZ2UYAyABKAESDwoHY3VycmVudBgEIAEoARIXCg9tZWFzdXJlbWVudFRp",
-            "bWUYBSABKAkyPgoHQ291bnRlchIzCg5HZXRDb3VudGVyRGF0YRIPLkNvdW50",
-            "ZXJSZXF1ZXN0GhAuQ291bnRlclJlc3BvbnNlQhaqAhNDb3VudGVyU2Vydmlj",
-            "ZS5HcnBjYgZwcm90bzM="));
+            "ChtQcm90b3MvQ291bnRlclNlcnZpY2UucHJvdG8iPwoOQ291bnRlclJlcXVl",
+            "c3QSFAoMc2VyaWFsTnVtYmVyGAEgASgJEhcKD21lYXN1cmVtZW50VGltZRgC",
+            "IAEoCSJ1Cg9Db3VudGVyUmVzcG9uc2USFAoMc2VyaWFsTnVtYmVyGAEgASgJ",
+            "EhEKCWxhc3RJbmRleBgCIAEoARIPCgd2b2x0YWdlGAMgASgBEg8KB2N1cnJl",
+            "bnQYBCABKAESFwoPbWVhc3VyZW1lbnRUaW1lGAUgASgJMj4KB0NvdW50ZXIS",
+            "MwoOR2V0Q291bnRlckRhdGESDy5Db3VudGVyUmVxdWVzdBoQLkNvdW50ZXJS",
+            "ZXNwb25zZUIWqgITQ291bnRlclNlcnZpY2UuR3JwY2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::CounterService.Grpc.CounterRequest), global::CounterService.Grpc.CounterRequest.Parser, new[]{ "SerialNumber" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::CounterService.Grpc.CounterRequest), global::CounterService.Grpc.CounterRequest.Parser, new[]{ "SerialNumber", "MeasurementTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::CounterService.Grpc.CounterResponse), global::CounterService.Grpc.CounterResponse.Parser, new[]{ "SerialNumber", "LastIndex", "Voltage", "Current", "MeasurementTime" }, null, null, null, null)
           }));
     }
@@ -78,6 +78,7 @@ namespace CounterService.Grpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public CounterRequest(CounterRequest other) : this() {
       serialNumber_ = other.serialNumber_;
+      measurementTime_ = other.measurementTime_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -99,6 +100,18 @@ namespace CounterService.Grpc {
       }
     }
 
+    /// <summary>Field number for the "measurementTime" field.</summary>
+    public const int MeasurementTimeFieldNumber = 2;
+    private string measurementTime_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string MeasurementTime {
+      get { return measurementTime_; }
+      set {
+        measurementTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -115,6 +128,7 @@ namespace CounterService.Grpc {
         return true;
       }
       if (SerialNumber != other.SerialNumber) return false;
+      if (MeasurementTime != other.MeasurementTime) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -123,6 +137,7 @@ namespace CounterService.Grpc {
     public override int GetHashCode() {
       int hash = 1;
       if (SerialNumber.Length != 0) hash ^= SerialNumber.GetHashCode();
+      if (MeasurementTime.Length != 0) hash ^= MeasurementTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -145,6 +160,10 @@ namespace CounterService.Grpc {
         output.WriteRawTag(10);
         output.WriteString(SerialNumber);
       }
+      if (MeasurementTime.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(MeasurementTime);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -159,6 +178,10 @@ namespace CounterService.Grpc {
         output.WriteRawTag(10);
         output.WriteString(SerialNumber);
       }
+      if (MeasurementTime.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(MeasurementTime);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -171,6 +194,9 @@ namespace CounterService.Grpc {
       int size = 0;
       if (SerialNumber.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SerialNumber);
+      }
+      if (MeasurementTime.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(MeasurementTime);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -186,6 +212,9 @@ namespace CounterService.Grpc {
       }
       if (other.SerialNumber.Length != 0) {
         SerialNumber = other.SerialNumber;
+      }
+      if (other.MeasurementTime.Length != 0) {
+        MeasurementTime = other.MeasurementTime;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -206,6 +235,10 @@ namespace CounterService.Grpc {
             SerialNumber = input.ReadString();
             break;
           }
+          case 18: {
+            MeasurementTime = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -223,6 +256,10 @@ namespace CounterService.Grpc {
             break;
           case 10: {
             SerialNumber = input.ReadString();
+            break;
+          }
+          case 18: {
+            MeasurementTime = input.ReadString();
             break;
           }
         }

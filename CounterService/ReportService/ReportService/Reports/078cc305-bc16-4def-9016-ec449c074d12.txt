@@ -1,0 +1,5 @@
+Report for Serial Number: 98765678
+Last Index: 10
+Voltage: 10
+Current: 10
+Measurement Time: 6/19/2024 12:57:06 PM
