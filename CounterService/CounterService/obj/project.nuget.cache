@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wpflHUUNMwa2ra996tUwR78bF+ASmKh9zSSpYq4pHNUGjueWwycliOG6wE3rom8q1N/zvElOChmbvyqV/a+5Jg==",
+  "dgSpecHash": "gwiNnI0AkjpfATEVn9VNjguWL1jQTplAPR/g9MGhXl9ezD4tkFPsF7XEzOL7Mjw2ENzIBCrzRT9mzvhpHeB0Gg==",
   "success": true,
   "projectFilePath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\CounterService\\CounterService.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.netcore.platforms\\1.0.1\\microsoft.netcore.platforms.1.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.netcore.targets\\1.0.1\\microsoft.netcore.targets.1.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\newtonsoft.json\\9.0.1\\newtonsoft.json.9.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\npgsql\\7.0.7\\npgsql.7.0.7.nupkg.sha512",

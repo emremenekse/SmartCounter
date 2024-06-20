@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  counterservice:
+    image: ${DOCKER_REGISTRY-}counterservice
+    build:
+      context: .
+      dockerfile: CounterService/Dockerfile
+
+  reportservice:
+    image: ${DOCKER_REGISTRY-}reportservice
+    build:
+      context: .
+      dockerfile: ReportService/ReportService/Dockerfile
+  counterdb:
+    image: postgres
+  reportdb:
+    image: postgres
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+volumes:
+  postgres_data:

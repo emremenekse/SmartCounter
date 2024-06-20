@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4+foePVTZ3f+F1ZbFlMUV2/CrmGSovCWqsGwYKGggn6AE7u9lKRgSBqBloMwx5j15X8GkqyRWg/6bVCbl6Xkng==",
+  "dgSpecHash": "sl8iQOCctRUH5ejWFnE9k2S2UhsYggng4mDS9sKwt3IXNR8HwEfpJIuNJyiTjgpaDDIuRZNHcTn6hnz5L/qLBQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\ReportService\\ReportService\\ReportService.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,7 @@
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.netcore.platforms\\1.0.1\\microsoft.netcore.platforms.1.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.netcore.targets\\1.0.1\\microsoft.netcore.targets.1.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\mehme\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\newtonsoft.json\\9.0.1\\newtonsoft.json.9.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\npgsql\\7.0.7\\npgsql.7.0.7.nupkg.sha512",

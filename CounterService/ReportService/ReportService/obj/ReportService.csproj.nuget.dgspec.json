@@ -28,8 +28,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj"
+              "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\Shared.csproj"
               }
             }
           }
@@ -94,6 +94,10 @@
               "target": "Package",
               "version": "[7.0.20, )"
             },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.19.4, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[7.0.18, )"
@@ -126,14 +130,14 @@
         }
       }
     },
-    "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj": {
+    "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj",
+        "projectPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\Shared.csproj",
         "packagesPath": "C:\\Users\\mehme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\obj\\",
+        "outputPath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mehme\\AppData\\Roaming\\NuGet\\NuGet.Config",

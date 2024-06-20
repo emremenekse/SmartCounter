@@ -1,2 +1,0 @@
-obj\Debug\net7.0\Protos/CounterService.cs \
-obj\Debug\net7.0\Protos/CounterServiceGrpc.cs: Protos/CounterService.proto

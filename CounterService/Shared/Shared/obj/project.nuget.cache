@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b3nB8ojFrIIXxGiod8VUXuFjTPaISMkCTHBjgc3HZjD1Mf8ATV1akKizC95lpdE/b3uSLstbCs9aUzR8DycEdQ==",
+  "dgSpecHash": "wbQerDIVWgFctKYKigyX4PjcaB/LJDJJ4+0ZOTHoG38kbgbg6TCe1t1MKKM6vL8qhMTIMeJO3vgtMQ/1IO+4GA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\Shared\\Shared\\Shared.csproj",
+  "projectFilePath": "C:\\Users\\mehme\\OneDrive\\Masaüstü\\SmartCounter\\CounterService\\Shared\\Shared\\Shared.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
     "C:\\Users\\mehme\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
