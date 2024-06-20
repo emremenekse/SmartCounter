@@ -58,7 +58,21 @@ builder.Services.AddMassTransit(x =>
 
 builder.Services.AddMassTransitHostedService();
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
 
+
+    try
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<ReportContext>();
+        await context.Database.MigrateAsync();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+    }
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -1,0 +1,159 @@
+name: dockercompose17725069844486539413
+services:
+  counterdb:
+    container_name: counterdb
+    environment:
+      POSTGRES_DB: CounterDb
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: sa
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U sa
+      timeout: 30s
+      interval: 30s
+      retries: 3
+    image: postgres
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  counterservice:
+    build:
+      context: C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService
+      dockerfile: CounterService/Dockerfile
+    depends_on:
+      counterdb:
+        condition: service_healthy
+        required: true
+      rabbitmq:
+        condition: service_healthy
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+      ConnectionStrings:DatabaseSettings: Server=counterdb;Port=5432;Database=CounterDb;User Id=sa;Password=admin;
+      RabbitMQSettings:Host: amqp://rabbitmq:5672
+    image: counterservice
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\mehme\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\mehme\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+  rabbitmq:
+    container_name: rabbitmq
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - rabbitmqctl status
+      timeout: 30s
+      interval: 30s
+      retries: 3
+    image: rabbitmq:3.8-management-alpine
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5672
+        published: "5672"
+        protocol: tcp
+      - mode: ingress
+        target: 15672
+        published: "15672"
+        protocol: tcp
+    restart: always
+  reportdb:
+    container_name: reportdb
+    environment:
+      POSTGRES_DB: ReportDb
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: sa
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U sa
+      timeout: 30s
+      interval: 30s
+      retries: 3
+    image: postgres
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "5433"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+        volume: {}
+  reportservice:
+    build:
+      context: C:\Users\mehme\OneDrive\Masaüstü\SmartCounter\CounterService
+      dockerfile: ReportService/ReportService/Dockerfile
+    container_name: report.api
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+        required: true
+      reportdb:
+        condition: service_healthy
+        required: true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+      ConnectionStrings:DatabaseSettings: Server=reportdb;Port=5433;Database=ReportDb;User Id=sa;Password=admin;
+      RabbitMQSettings:Host: amqp://rabbitmq:5672
+    image: reportservice
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 80
+        published: "8002"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\mehme\AppData\Roaming/Microsoft/UserSecrets
+        target: /root/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+      - type: bind
+        source: C:\Users\mehme\AppData\Roaming/ASP.NET/Https
+        target: /root/.aspnet/https
+        read_only: true
+        bind:
+          create_host_path: true
+networks:
+  default:
+    name: dockercompose17725069844486539413_default
+volumes:
+  postgres_data:
+    name: dockercompose17725069844486539413_postgres_data
