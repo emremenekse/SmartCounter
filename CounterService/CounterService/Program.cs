@@ -7,6 +7,7 @@ using CounterService.Service;
 using Microsoft.EntityFrameworkCore;
 using CounterService.Validation;
 using Shared.ErrorHandling;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 

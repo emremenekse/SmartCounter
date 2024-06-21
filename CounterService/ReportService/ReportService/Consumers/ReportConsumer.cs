@@ -33,14 +33,14 @@ namespace ReportService.Consumers
                                      $"Current: {reportMessage.Current}\n" +
                                      $"Measurement Time: {reportMessage.MeasurementTime}";
 
-                    var directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Reports");
+                    var directoryPath = Path.Combine("/app", "Reports"); // Docker için uygun dizin
                     if (!Directory.Exists(directoryPath))
                     {
                         Directory.CreateDirectory(directoryPath);
                     }
 
                     var filePath = Path.Combine(directoryPath, $"{reportMessage.ReportRequestId}.txt");
-                    var content = GetReportContent(reportMessage, "txt"); 
+                    var content = GetReportContent(reportMessage, "txt");
 
                     await File.WriteAllTextAsync(filePath, content);
                     await File.WriteAllTextAsync(filePath, reportData);
@@ -59,14 +59,11 @@ namespace ReportService.Consumers
                 }
                 catch (Exception ex)
                 {
-
                     throw;
                 }
-                
-
-
             }
         }
+
         private string GetReportContent(ReportMessage reportMessage, string format)
         {
             if (format.ToLower() == "json")

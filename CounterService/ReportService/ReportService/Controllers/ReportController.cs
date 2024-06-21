@@ -45,6 +45,7 @@ namespace ReportService.Controllers
         {
             try
             {
+                filePath = System.Web.HttpUtility.UrlDecode(filePath); 
                 var file = Path.Combine(Directory.GetCurrentDirectory(), filePath);
                 var net = new System.Net.WebClient();
                 var data = net.DownloadData(file);

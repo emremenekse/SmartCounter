@@ -1,39 +1,22 @@
 version: '3.4'
 
 services:
-  counterservice:
+  reportdb:
+    container_name: reportdb
+    restart: always
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - "ConnectionStrings:DatabaseSettings=Server=counterdb;Port=5432;Database=CounterDb;User Id=sa;Password=admin;"
-      - "RabbitMQSettings:Host=amqp://rabbitmq:5672"
+      - POSTGRES_USER=sa
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=ReportDb
     ports:
-      - "8001:80"
+      - "5432:5432"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-    depends_on:
-      counterdb:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-  reportservice:
-    container_name: report.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-      - "ConnectionStrings:DatabaseSettings=Server=reportdb;Port=5433;Database=ReportDb;User Id=sa;Password=admin;"
-      - "RabbitMQSettings:Host=amqp://rabbitmq:5672"
-    ports:
-      - "8002:80"
-    depends_on:
-      reportdb:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - reportdb_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sa"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -53,30 +36,43 @@ services:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=CounterDb
     ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sa"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-  reportdb:
-    container_name: reportdb
-    restart: always
-    environment:
-      - POSTGRES_USER=sa
-      - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=ReportDb
-    ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - counterdb_data:/var/lib/postgresql/data/
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U sa"]
       interval: 30s
       timeout: 30s
       retries: 3
-
-      
-      
+  counterservice:
+    container_name: counter.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DatabaseSettings=Server=counterdb;Port=5432;Database=CounterDb;User Id=sa;Password=admin;"
+      - "RabbitMQSettings:Host=amqp://rabbitmq:5672"
+    depends_on:
+      counterdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "8001:80"
+    command: ["dotnet", "CounterService.dll"]
+  reportservice:
+    container_name: report.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DatabaseSettings=Server=reportdb;Port=5432;Database=ReportDb;User Id=sa;Password=admin;"
+      - "RabbitMQSettings:Host=amqp://rabbitmq:5672"
+      - "GrpcSettings:CounterServiceUrl=http://counter.api"
+      - CounterApi:BaseUrl=http://counter.api
+    volumes:
+      - reports:/app/Reports
+    depends_on:
+      reportdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "8002:80"
+    command: ["dotnet", "ReportService.dll"]

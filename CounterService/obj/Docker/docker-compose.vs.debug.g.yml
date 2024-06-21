@@ -3,7 +3,6 @@ version: '3.4'
 services:
   counterservice:
     image: counterservice:dev
-    container_name: "CounterService"
     build:
       target: base
       labels:

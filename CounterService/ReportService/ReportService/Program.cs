@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using MassTransit;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using ReportService.Abstractions;
 using ReportService.Concrete;
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ReportContext>(options =>
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<IReportService, ReportService.Services.ReportService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddHttpClient<ReportService.Services.ReportService>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -43,7 +45,7 @@ builder.Services.AddMassTransit(x =>
 
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("localhost", "/", h =>
+        cfg.Host("rabbitmq", "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
@@ -55,22 +57,21 @@ builder.Services.AddMassTransit(x =>
         });
     });
 });
-
 builder.Services.AddMassTransitHostedService();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
-
-
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
     try
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ReportContext>();
         await context.Database.MigrateAsync();
+        logger.LogInformation("Database migration completed successfully.");
     }
     catch (Exception ex)
     {
-        Console.WriteLine(ex);
+        logger.LogError(ex, "An error occurred while migrating the database.");
     }
 }
 // Configure the HTTP request pipeline.

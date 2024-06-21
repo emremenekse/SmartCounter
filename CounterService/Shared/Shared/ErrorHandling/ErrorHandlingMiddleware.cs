@@ -47,7 +47,7 @@ namespace Shared.ErrorHandling
             }
             else
             {
-                response = Response<object>.Fail("Something gone wrong...", (int)code);
+                response = Response<object>.Fail(exception.ToString(), (int)code);
             }
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;

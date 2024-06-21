@@ -7,6 +7,8 @@ using ReportService.Entities;
 using ReportService.Messaging;
 using CounterService.Grpc;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace ReportService.Services
 {
@@ -15,12 +17,20 @@ namespace ReportService.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly IConfiguration _configuration;
+        private readonly HttpClient _httpClient;
+        private readonly string _baseUrl;
+        private readonly string _counterEndpoint;
 
-        public ReportService(IUnitOfWork unitOfWork, IMapper mapper, IPublishEndpoint publishEndpoint)
+        public ReportService(IUnitOfWork unitOfWork, IMapper mapper, IPublishEndpoint publishEndpoint, IConfiguration configuration, HttpClient httpClient)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
+            _configuration = configuration;
+            _httpClient = httpClient;
+            _baseUrl = configuration["CounterApi:BaseUrl"];
+            _counterEndpoint = configuration["CounterApi:CounterEndpoint"];
         }
         public async Task<Shared.Response<ReportRequestDTO>> CreateReportRequestAsync(string serialNumber, DateTime measurementTime)
         {
@@ -40,11 +50,49 @@ namespace ReportService.Services
 
             await _unitOfWork.ReportRepository.AddRequestAsync(request);
             await _unitOfWork.SaveChangesAsync();
+            CounterResponse grpcResponse = null;
+            try
+            {
+                var grpcCounterServiceUrl = _configuration["GrpcSettings:CounterServiceUrl"];
+                var grpcChannel = GrpcChannel.ForAddress(grpcCounterServiceUrl);
+                var grpcClient = new Counter.CounterClient(grpcChannel);
+                var grpcRequest = new CounterRequest { SerialNumber = serialNumber, MeasurementTime = measurementTime.ToString() };
+                grpcResponse = await grpcClient.GetCounterDataAsync(grpcRequest);
+            }
+            catch (Exception)
+            {
+                var fullUrl = $"{_baseUrl}{_counterEndpoint}/{serialNumber}/{measurementTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}";
+                var httpCounterServiceUrl = _configuration["HttpSettings:CounterServiceUrl"];
+                var httpResponse = await _httpClient.GetAsync(fullUrl);
 
-            var grpcChannel = GrpcChannel.ForAddress("https://localhost:5001");
-            var grpcClient = new Counter.CounterClient(grpcChannel);
-            var grpcRequest = new CounterRequest { SerialNumber = serialNumber , MeasurementTime= measurementTime.ToString() };
-            var grpcResponse = await grpcClient.GetCounterDataAsync(grpcRequest);
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    var meterReadingResponse = JsonSerializer.Deserialize<MeterReadingResponseDTO>(responseContent, options);
+                    if (meterReadingResponse != null)
+                    {
+                        grpcResponse = MapToCounterResponse(meterReadingResponse.Data);
+                    }
+                    else
+                    {
+                        throw new Exception("HTTP request failed with message: " + meterReadingResponse?.ErrorMessage + "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + meterReadingResponse + "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" + responseContent);
+                    }
+                }
+                else
+                {
+                    throw new Exception(fullUrl + "HTTP request failed with status code: " + "###########" + httpResponse + "###########"+$"{httpCounterServiceUrl}/{serialNumber}/{measurementTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}");
+                }
+            }
+            if (grpcResponse == null)
+            {
+                throw new Exception("Failed to retrieve counter data from both gRPC and HTTP endpoints");
+            }
 
             var reportMessage = new ReportMessage
             {
@@ -59,6 +107,17 @@ namespace ReportService.Services
             await _publishEndpoint.Publish(reportMessage);
 
             return Shared.Response<ReportRequestDTO>.Success(_mapper.Map<ReportRequestDTO>(request),201);
+        }
+        private CounterResponse MapToCounterResponse(MeterReadingDTO meterReading)
+        {
+            return new CounterResponse
+            {
+                SerialNumber = meterReading.SerialNumber,
+                LastIndex = (double)meterReading.LastIndex,
+                Voltage = (double)meterReading.Voltage,
+                Current = (double)meterReading.Current,
+                MeasurementTime = meterReading.MeasurementTime.ToString("o")
+            };
         }
 
         public async Task<Shared.Response<IEnumerable<ReportRequestDTO>>> GetAllReportRequestsAsync()
